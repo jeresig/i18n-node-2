@@ -53,12 +53,11 @@ var i18n = module.exports = function(opt) {
 	if (this.request) {
 		if (this.subdomain) {
 			this.setLocaleFromSubdomain(this.request);
-		}
-
-		if (this.query !== false) {
+		} else if (this.query) {
 			this.setLocaleFromQuery(this.request);
-		}
-
+		} else {
+			this.setLocaleFromPath(this.request);
+		} 
 		this.prefLocale = this.preferredLocale();
 	}
 };
