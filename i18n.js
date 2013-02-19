@@ -191,7 +191,7 @@ i18n.prototype = {
 		}
 
 		// match locale according to: http://www.ietf.org/rfc/rfc1766.txt  (caseinsensitive)
-		if (/\/([a-z]{2}(?:-(?:[A-Z]{2}))*)\//i.test(req.path) && this.locales[RegExp.$1]) {
+		if (/^\/([a-z]{2}(?:-(?:[A-Z]{2}))*)\//i.test(req.path) && this.locales[RegExp.$1]) {
 			if (this.devMode) {
 				console.log("Overriding locale from host: " + RegExp.$1);
 			}
