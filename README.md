@@ -113,6 +113,20 @@ For example:
 Will then do:
 
 	setLocale('de')
+	
+### `setLocaleFromPath([request])`
+
+To be used with Express.js or another framework that provides a `request` object. Generally you would want to use this by setting the `subdomain` option to `true`.
+
+This method takes in an Express.js request object, looks at the hostname, and extracts the first segment of the path. Reading the value of the subdomain the locale is then set.
+
+For example:
+
+	example.com/de/
+
+Will then do:
+
+	setLocale('de')
 
 ### `isPreferredLocale()`
 
