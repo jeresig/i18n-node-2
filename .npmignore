@@ -1,0 +1,6 @@
+examples/
+docs/
+src/
+test/
+spec/
+.DS_Store
