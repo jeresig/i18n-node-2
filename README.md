@@ -42,7 +42,7 @@ Run the following:
 In your app.js:
 
 	// example localization initialization
-	var i18n = require('loc')({
+	var loc = require('loc')({
 		// it gets the locale from the following strategies in this order.
 		// if the locale is not part of the `path`it looks it up in the `query` ect.
 	  getLocaleFrom: ['path', 'query', 'subdomain', 'cookie'],
@@ -68,21 +68,21 @@ In your app.js:
 	});
 
 	// adds all middlewares as bundle
-	//i18n.bind(app);
+	//loc.bind(app);
 	//or add them separately
 
 	// adds the loc middleware. adds the req.i18n object.
-	app.use(i18n.loc());
+	app.use(loc.loc());
 
 	// adds the locPathRewrite middleware used for the `path` strategy.
 	// it redirects the request to the url without the locale in the path. e.g. `/en-GB/about` to `/about` 
-	app.use(i18n.pathRewrite());
+	app.use(loc.pathRewrite());
 
 	// adds the urlTranslation middleware
-	app.use(i18n.urlTranslation());
+	app.use(loc.urlTranslation());
 
 	// print out localeCache for debugging purposes 
-	i18n.writeLocaleCache();
+	loc.writeLocaleCache();
 
 ### Inside Your Express View
 
