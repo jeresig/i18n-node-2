@@ -57,8 +57,11 @@ In your app.js:
 	  // the following locales are supported (optional). 
 	  // If this option is omitted, it accetps what ever is defined in the definitions.
 	  locales: ['de', 'de-ch', 'en', 'en-GB', 'en-us'],
+
+	  // locale definition director
+	  directory: "./locales",
 	  
-	  // file extension
+	  // locale definition file extension
 	  extension: ".json",
 
 	  // Exclude List for the path rewrite middleware used for the path strategy.	
@@ -167,44 +170,11 @@ To be used with Express.js or another framework that provides a `request` object
 
 This method returns true if the locale specified by `getLocale` matches a language desired by the browser's `Accept-language` header.
 
-## Configuration
 
-When you instantiate a new i18n object there are a few options that you can pass in. The only required option is `locales`.
+## locale definition
 
-### `locales`
 
-You can pass in the locales in two ways: As an array of strings or as an object of objects. For example:
-
-	locales: ['en', 'de']
-
-This will set two locales (en and de) and read in the JSON contents of both translation files. (By default this is equal to "./locales/NAME.js", you can configure this by changing the `directory` and `extension` options.) Additionally when you pass in an array of locales the first locale is automatically set as the `defaultLocale`.
-
-You can also pass in an object, like so:
-
-	locales: {
-		"en": {
-			"Hello": "Hello"
-		},
-		"de": {
-			"Hello": "Hallo"
-		}
-	}
-
-In this particular case no files will ever be read when doing a translation. This is ideal if you are loading your translations from a different source. Note that no `defaultLocale` is set when you pass in an object, you'll need to set it yourself.
-
-### `defaultLocale`
-
-You can explicitly define a default locale to be used in cases where `.setLocale(locale)` is used with an unknown locale. For example if you have locales of 'en' and 'de', and a `defaultLocale` of 'en', then call `.setLocale('ja')` it will be equivalent to calling `.setLocale('en')`.
-
-### `directory` and `extension`
-
-These default to `"./locales"` and `".js"` accordingly. They are used for saving and reading the locale data files (see the `locales` option for more information on how this works).
-
-When your server is in production mode it will read these files only once and then cache the result. It will not write any updated strings when in production mode.
-
-When in development, or testing, mode the files will be read on every instantiation of the `i18n` object. Additionally newly-detected strings will be automatically added, and written out, to the locale JSON files.
-
-A generated `en.js` inside `./locales/` may look something like:
+An example locale definition `en.js` inside `./locales/` may look something like:
 
 	{
 		"Hello": "Hello",
@@ -226,6 +196,82 @@ A generated `en.js` inside `./locales/` may look something like:
 
 that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
 
+## locale definition with contexts example
+
+### Example Source Files:
+	// locales/en.json
+	{
+		"Home": "Start Page",
+		"Lessons": "Lessons",
+		"About Us": "About Us"
+	}
+
+	// locales/de-ch.json
+	{
+		"Home": "De Hei",
+		"Lessons": "Lektion",
+		"About Us": "Über üüs"
+	}
+
+	// locales/url/de-ch.json
+	{
+		"title": "Tegscht"
+	}
+
+	// locales/url/cms/de-ch.json
+	{
+		"cms title": "CMS Überschrift",
+		"nested": {
+			"keys": "Verschachtelt"
+		}
+	}
+
+
+### Queries:
+	// Example 1
+	// locale sep   key        Resulting Value
+	//  ----  ---  ------      ---------------
+	// ['en']['/']['Home'] --> "Start Page"
+
+	// Example 2
+	//  locale     context     sep     key            Resulting Value
+	//  -------  ------------  ---  -----------      -----------------
+	// ['de-ch']['url']['cms']['/']['cms title'] --> "CMS Überschrift"
+
+	// Example 3
+	//  locale     context     sep       key              Resulting Value
+	//  -------  ------------  ---  ----------------      ---------------
+	// ['de-ch']['url']['cms']['/']['nested']['keys'] --> "Verschachtelt"
+
+
+### localeCache:
+	{
+		"en": {
+			"Home": "Start Page",
+			"Lessons": "Lessons",
+			"About Us": "About Us"
+		},
+		"de-ch": {
+			"/": {
+				"Home": "De Hei",
+				"Lessons": "Lektion",
+				"About Us": "Über üüs"
+			},
+			"url": {
+				"/": {
+					"title": "Tegscht"
+				},
+				"cms": {
+					"/": {
+						"cms title": "CMS Überschrift",
+						"nested": {
+							"keys": "Verschachtelt"
+						}
+					}
+				}
+			}
+		}
+	}
 
 
 ## tests
