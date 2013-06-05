@@ -283,3 +283,13 @@ In your app.js:
 	{% endblock %}
 
 
+##tests
+run the tests with 
+
+	mocha
+
+
+## license
+
+[MIT License](https://github.com/intesso/loc/blob/master/LICENSE)
+
