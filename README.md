@@ -36,35 +36,80 @@ Run the following:
 
 	npm install loc
 
-## Simple Example
+## Usage
 
-	// initialize localization
+### Load and Configure
+In your app.js:
+
+	// example localization initialization
 	var i18n = require('loc')({
+		// it gets the locale from the following strategies in this order.
+		// if the locale is not part of the `path`it looks it up in the `query` ect.
 	  getLocaleFrom: ['path', 'query', 'subdomain', 'cookie'],
+
+	  // if the locale was found in one of the strategies above, it stores it with this strategy.
+	  // in this case in the `cookie`
 	  storeLocaleTo: ['cookie'],
+
+	  // the locale definitions (translations) are retrieved from `file`.
 	  storage: 'file',
+
+	  // the following locales are supported (optional). 
+	  // If this option is omitted, it accetps what ever is defined in the definitions.
 	  locales: ['de', 'de-ch', 'en', 'en-GB', 'en-us'],
+	  
+	  // file extension
 	  extension: ".json",
+
+	  // Exclude List for the path rewrite middleware used for the path strategy.	
+	  // problematic are static assets and url's that start with one to three letters in the path like:
+	  // /p/, /js/ or /img/ and should therefore be excluded.
 	  excludeList: [".css", ".js", '.ico', '/api/', '/img/', '/css/', '/js/']
 	});
 
+	// adds all middlewares as bundle
 	//i18n.bind(app);
-	//or 
-	app.use(i18n.init());
+	//or add them separately
+
+	// adds the loc middleware. adds the req.i18n object.
+	app.use(i18n.loc());
+
+	// adds the locPathRewrite middleware used for the `path` strategy.
+	// it redirects the request to the url without the locale in the path. e.g. `/en-GB/about` to `/about` 
 	app.use(i18n.pathRewrite());
+
+	// adds the urlTranslation middleware
 	app.use(i18n.urlTranslation());
-	// print out localeCache for debugging purposes
+
+	// print out localeCache for debugging purposes 
 	i18n.writeLocaleCache();
 
-## API:
+### Inside Your Express View
 
-### `new I18n(options)`
+	module.exports = {
+		index: function(req, res) {
+			req.render("index", {
+				title: req.i18n.__("My Site Title"),
+				desc: req.i18n.__("My Site Description")
+			});
+		}
+	};
 
-The `I18n` function is the return result from calling `require('i18n-2')`. You use this to instantiate an `I18n` instance and set any configuration options. You'll probably only do this if you're not using the `bindExpress` method.
+### Inside Your Templates: Swig example
+	{% extends "page.swig" %}
 
-### `I18n.bindExpress(app, options)`
+	{% block content %}
+	<h1>{{ __("Welcome to:") }} {{ title }}</h1>
+	<p>{{ desc }}</p>
+	{% endblock %}
 
-You'll use this method to attach the i18n functionality to the request object inside Express.js. The app argument should be your Express.js app and the options argument should be the same as if you were calling `new I18n(options)`. See **"Using with Express.js"** at the end of this README for more details.
+
+### Inside Your Templates: ejs example
+	<head>
+	  <title><%=__("title") %></title>
+	  ...
+
+## loc API:
 
 ### `__(string, [...])`
 
@@ -115,34 +160,6 @@ Returns a string containing the current locale. If no locale has been specified 
 ### `setLocale(locale)`
 
 Sets a locale to the specified string. If the locale is unknown, the locale defaults to the one specified by `defaultLocale`. For example if you have locales of 'en' and 'de', and a `defaultLocale` of 'en', then call `.setLocale('ja')` it will be equivalent to calling `.setLocale('en')`.
-
-### `setLocaleFromQuery([request])`
-
-To be used with Express.js or another framework that provides a `request` object. Generally you would want to use this by setting the `query` option to `true`.
-
-This method takes in an Express.js request object, looks at the query property, and specifically at the `lang` parameter. Reading the value of that parameter will then set the locale.
-
-For example:
-
-	example.com/?lang=de
-
-Will then do:
-
-	setLocale('de')
-
-### `setLocaleFromSubdomain([request])`
-
-To be used with Express.js or another framework that provides a `request` object. Generally you would want to use this by setting the `subdomain` option to `true`.
-
-This method takes in an Express.js request object, looks at the hostname, and extracts the sub-domain. Reading the value of the subdomain the locale is then set.
-
-For example:
-
-	de.example.com
-
-Will then do:
-
-	setLocale('de')
 
 ### `isPreferredLocale()`
 
@@ -209,81 +226,9 @@ A generated `en.js` inside `./locales/` may look something like:
 
 that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
 
-### `request`, `subdomain`, and `query`
-
-These options are to be used with Express.js or another framework that provides a `request` object. In order to use the `subdomain` and `query` options you must specify the `request` option, passing in the Express.js `request` object.
-
-If you pass in a `request` object a new `i18n` property will be attached to it, containing the i18n instance.
-
-Note that you probably won't need to use `request` directly, if you use `bindExpress` it is taken care of automatically.
-
-Setting the `subdomain` option to `true` will run the `setLocaleFromSubdomain` method automatically on every request.
-
-By default the `query` option is set to true. Setting the `query` option to `false` will stop the `setLocaleFromQuery` method from running automatically on every request.
-
-### `register`
-
-Copy the `__`, `__n`, `getLocale`, and `isPreferredLocale` methods over to the object specified by the `register` property.
-
-	var obj = {};
-	new I18n({ 'register': obj })
-	console.log( obj.__("Hello.") );
-
-### `devMode`
-
-By default the `devMode` property is automatically set to be `false` if Node.js is in production mode and `true` otherwise. You can override this by setting a different value to the `devMode` option.
-
-## Using with Express.js
-
-### Load and Configure
-
-In your app.js:
-
-	// load modules
-	var express = require('express'),
-		I18n = require('i18n-2');
-
-	// Express Configuration
-	app.configure(function() {
-
-		// ...
-
-		// Attach the i18n property to the express request object
-		// And attach helper methods for use in templates
-		I18n.expressBind(app, {
-			// setup some locales - other locales default to en silently
-			locales: ['en', 'de']
-		}));
-
-		// Set up the rest of the Express middleware
-		app.use(app.router);
-		app.use(express.static(__dirname + '/public'));
-	});
-
-### Inside Your Express View
-
-	module.exports = {
-		index: function(req, res) {
-			req.render("index", {
-				title: req.i18n.__("My Site Title"),
-				desc: req.i18n.__("My Site Description")
-			});
-		}
-	};
-
-### Inside Your Templates
-
-(This example uses the Swig templating system.)
-
-	{% extends "page.swig" %}
-
-	{% block content %}
-	<h1>{{ __("Welcome to:") }} {{ title }}</h1>
-	<p>{{ desc }}</p>
-	{% endblock %}
 
 
-##tests
+## tests
 run the tests with 
 
 	mocha
