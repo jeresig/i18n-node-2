@@ -1,30 +1,60 @@
-# Node.js: i18n-2
+# loc
 
- * Designed to work out-of-the-box with Express.js
- * Lightweight simple translation module with dynamic json storage. 
- * Uses common __('...') syntax in app and templates.
- * Stores language files in json files compatible to [webtranslateit](http://webtranslateit.com/) json format.
- * Adds new strings on-the-fly when first used in your app.
+## Features
+ * Full featured localization module for express.js
+ * server side translation
+ * Pluggable storages
+ * Pluggable strategies like query, path, cookie ect.
+ * Url Translation
+ * Uses common __('...') syntax in app and templates
+ * Support for plurals
+ * Stores language files in json files compatible to [webtranslateit](http://webtranslateit.com/) json format
+ * Adds new strings on-the-fly when first used in your app
+ * Nested, hierarchical contexts, separated in different files
+ * Uses the closest to the preferred user locale, if not set explicitely by the user request
+ * Automatic fallback to more generic localization (http://www.rfc-editor.org/rfc/rfc4647.txt)
+ * Support for locale names according to http://www.rfc-editor.org/rfc/bcp/bcp47.txt
  * No extra parsing needed.
+ * Handles simultaneous requests with different locales correctly :-)
+
+## Background
+The module was originally developed by https://github.com/mashpie/i18n-node, then forked and refactored by https://github.com/jeresig/i18n-node-2. This is a serious refactoring of the latter. Reasons:
+ * were not pluggable / extendable
+ * not specific to express.js
+ * complicated code
+ * features missing: url translation, hierarchical contexts, locale fallback, preferred user locale, ...
+
+## TODO
+ * better description
+ * more tests
+ * client side translation / routes
+ * import/export language definitions e.g. gettext
 
 ## Installation
 
 Run the following:
 
-	npm install i18n-2
+	npm install loc
 
 ## Simple Example
 
-Note: If you plan on using the module with Express.js, please view the on that, below.
-
-	// Load Module and Instantiate
-	var i18n = new (require('i18n-2'))({
-		// setup some locales - other locales default to the first locale
-		locales: ['en', 'de']
+	// initialize localization
+	var i18n = require('loc')({
+	  getLocaleFrom: ['path', 'query', 'subdomain', 'cookie'],
+	  storeLocaleTo: ['cookie'],
+	  storage: 'file',
+	  locales: ['de', 'de-ch', 'en', 'en-GB', 'en-us'],
+	  extension: ".json",
+	  excludeList: [".css", ".js", '.ico', '/api/', '/img/', '/css/', '/js/']
 	});
 
-	// Use it however you wish
-	console.log( i18n.__("Hello!") );
+	//i18n.bind(app);
+	//or 
+	app.use(i18n.init());
+	app.use(i18n.pathRewrite());
+	app.use(i18n.urlTranslation());
+	// print out localeCache for debugging purposes
+	i18n.writeLocaleCache();
 
 ## API:
 
@@ -109,20 +139,6 @@ This method takes in an Express.js request object, looks at the hostname, and ex
 For example:
 
 	de.example.com
-
-Will then do:
-
-	setLocale('de')
-	
-### `setLocaleFromPath([request])`
-
-To be used with Express.js or another framework that provides a `request` object. Generally you would want to use this by setting the `subdomain` option to `true`.
-
-This method takes in an Express.js request object, looks at the hostname, and extracts the first segment of the path. Reading the value of the subdomain the locale is then set.
-
-For example:
-
-	example.com/de/
 
 Will then do:
 
@@ -266,18 +282,4 @@ In your app.js:
 	<p>{{ desc }}</p>
 	{% endblock %}
 
-## Changelog
 
-* 0.4.4: fix typo
-* 0.4.3: fix issue with preferredLocale failing on useragents with no accept lang header
-* 0.4.2: fix some issues with cache init
-* 0.4.1: rename locale query string param to lang
-* 0.4.0: made settings contained, and scoped, to a single object (complete re-write by jeresig)
-* 0.3.5: fixed some issues, prepared refactoring, prepared publishing to npm finally
-* 0.3.4: merged pull request #13 from Fuitad/master and updated README
-* 0.3.3: merged pull request from codders/master and modified for backward compatibility. Usage and tests pending
-* 0.3.2: merged pull request #7 from carlptr/master and added tests, modified fswrite to do sync writes
-* 0.3.0: added configure and init with express support (calling guessLanguage() via 'accept-language')
-* 0.2.0: added plurals
-* 0.1.0: added tests
-* 0.0.1: start 
