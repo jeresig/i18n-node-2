@@ -8,9 +8,9 @@ var loc = require('../index')();
 
 // test that the cookie is set
 app.use(function(req, res, next) {
-  var cookies = res.get('Set-Cookie');
-  assert(~cookies.indexOf('lang='))
   next();
+  var cookies = res.get('Set-Cookie');
+  assert(~cookies.indexOf('lang='));
 })
 
 // route
