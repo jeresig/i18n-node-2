@@ -42,6 +42,7 @@ it('__', function(done) {
   i18n.setLocale('de');
   assert.equal(i18n.getLocale(), 'de');
   assert.equal(i18n.__('Hello'), 'Hallo');
+  assert.equal(i18n.t('Hello'), 'Hallo');
   done();
 });
 
@@ -68,7 +69,7 @@ it('plural', function(done) {
 
   i18n.setLocale('de');
   singular = i18n.__n('%s cat', '%s cats', 1);
-  plural = i18n.__n('%s cat', '%s cats', 3);
+  plural = i18n.tn('%s cat', '%s cats', 3);
   assert.equal(singular, '1 Katze');
   assert.equal(plural, '3 Katzen');
   done();
