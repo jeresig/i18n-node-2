@@ -5,7 +5,6 @@ var ejs = require('ejs');
 // setup loc
 var loc = require('./fixtures/setup')(app);
 
-
 // test that the cookie is set and that req.i18n and res.locals are present.
 app.use(function cookieTest(req, res, next) {
   var cookies = res.get('Set-Cookie');
@@ -26,6 +25,11 @@ app.get('/test', function(req, res) {
   res.send(ejs.render(html, res.locals));
 })
 
+app.get('/test/site', function(req, res) {
+  var html = '<html><head></head><body><p><%=__("Hi") %></p></body></html>';
+  res.send(ejs.render(html, res.locals));
+})
+
 
 // run the tests
 var request = require('supertest');
@@ -35,21 +39,9 @@ function contains(res, string) {
   return (~res.text.indexOf(string));
 }
 
-it('path strategy de', function(done) {
+it('url de-ch', function(done) {
   request(app)
-    .get('/de/test')
-    .set('Accept', 'text/html')
-    .expect(200)
-    .end(function(err, res) {
-    assert(contains(res, 'Hallo'));
-    if (err) return done(err);
-    done()
-  });
-});
-
-it('path strategy de-ch', function(done) {
-  request(app)
-    .get('/de-CH/test')
+    .get('/de-ch/Tescht')
     .set('Accept', 'text/html')
     .expect(200)
     .end(function(err, res) {
@@ -59,16 +51,26 @@ it('path strategy de-ch', function(done) {
   });
 });
 
-it('query strategy de-ch', function(done) {
+it('url de-ch', function(done) {
   request(app)
-    .get('/test?lang=de-ch')
+    .get('/de-ch/Tescht/Siite')
     .set('Accept', 'text/html')
     .expect(200)
     .end(function(err, res) {
-    assert(contains(res, 'Tschau'));
+    assert(contains(res, 'Ciao'));
     if (err) return done(err);
     done()
   });
 });
 
-// TODO test subdomain
+it('url en', function(done) {
+  request(app)
+    .get('/en/exam')
+    .set('Accept', 'text/html')
+    .expect(200)
+    .end(function(err, res) {
+    assert(contains(res, 'Hello'));
+    if (err) return done(err);
+    done()
+  });
+});

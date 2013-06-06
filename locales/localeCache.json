@@ -16,6 +16,15 @@
 				"other": "Im Baum sitzen %d Affen"
 			},
 			"tree": "Baum"
+		},
+		"customer": {
+			"/": {},
+			"big": {
+				"/": {}
+			}
+		},
+		"url": {
+			"/": {}
 		}
 	},
 	"de-ch": {
@@ -35,6 +44,22 @@
 				"other": "Im Baum sitzed %d Affe"
 			},
 			"tree": "Baum"
+		},
+		"customer": {
+			"/": {
+				"Hello": "Grüezi"
+			},
+			"big": {
+				"/": {
+					"Hello": "Guete Tag"
+				}
+			}
+		},
+		"url": {
+			"/": {
+				"Tescht": "test",
+				"Siite": "site"
+			}
 		}
 	},
 	"en": {
@@ -55,6 +80,17 @@
 			},
 			"tree": "tree",
 			"Hello %s, how are you today? How was your %s": "Hello %s, how are you today? How was your %s."
+		},
+		"customer": {
+			"/": {},
+			"big": {
+				"/": {}
+			}
+		},
+		"url": {
+			"/": {
+				"exam": "test"
+			}
 		}
 	},
 	"en-gb": {
@@ -74,6 +110,15 @@
 				"other": "There are %d monkeys in the %%s"
 			},
 			"tree": "tree"
+		},
+		"customer": {
+			"/": {},
+			"big": {
+				"/": {}
+			}
+		},
+		"url": {
+			"/": {}
 		}
 	},
 	"en-us": {
@@ -93,6 +138,15 @@
 				"other": "Three %d Monks in the %%s"
 			},
 			"tree": "tree"
+		},
+		"customer": {
+			"/": {},
+			"big": {
+				"/": {}
+			}
+		},
+		"url": {
+			"/": {}
 		}
 	}
 }

@@ -1,4 +1,6 @@
 # loc
+[![Build Status](https://travis-ci.org/intesso/loc.png)](https://travis-ci.org/intesso/loc)
+
 
 ## Features
  * Full featured localization module for express.js
@@ -167,8 +169,23 @@ that file can be edited or just uploaded to [webtranslateit](http://docs.webtran
 		}
 	}
 
-
 ### Queries
+	var loc = require('loc')();
+  var i18n = new Translation(loc);
+
+  // Example 1
+  i18n.setLocale('en')
+  i18n.t('Home')
+
+  // Example 2
+  i18n.setLocale('de-ch')
+  i18n.t('url/cms/cms title')
+
+  // Example 3
+  i18n.setLocale('de-ch')
+  i18n.t('url/cms/nested.cms title')
+
+### Queries (internal)
 	// Example 1
 	// locale sep   key        Resulting Value
 	//  ----  ---  ------      ---------------
@@ -185,7 +202,7 @@ that file can be edited or just uploaded to [webtranslateit](http://docs.webtran
 	// ['de-ch']['url']['cms']['/']['nested']['keys'] --> "Verschachtelt"
 
 
-### localeCache
+### localeCache (internal)
 	{
 		"en": {
 			"Home": "Start Page",
@@ -214,7 +231,29 @@ that file can be edited or just uploaded to [webtranslateit](http://docs.webtran
 		}
 	}
 
+## url translate
+if the url translation middleware is added:
+  app.use(loc.urlTranslation());
+Urls will be translated according to the `context` url.
+The url is being translated by segments.
+
+Example:
+File: locales/de-ch.json
+	{
+		"Start" : "home",
+		"Seite": "page"
+	}
+
+the url: `/Start` is being redirected to `/home`
+the url: `/Start?Seite=1` is being redirected to `/home?page=1`
+
 ## methods
+
+In order to run the following examples, you must first require loc and create a new i18n object.
+The i18n object is created on every request.
+
+	var loc = require('loc')();
+  var i18n = new Translation(loc);
 
 ### `__(string, [...])`
 

@@ -1,7 +1,7 @@
 {
   "name": "loc",
   "description": "lightweight simple translation module with dynamic json storage",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "Andi Neck <andi.neck@intesso.com>",
   "contributors": [
     {

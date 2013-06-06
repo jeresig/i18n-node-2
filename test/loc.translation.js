@@ -4,8 +4,7 @@ var ejs = require('ejs');
 var Translation = require('../lib/translation');
 
 // setup loc
-var loc = require('./fixtures/setup')(app);
-
+var loc = require('../index')();
 
 // test that the cookie is set
 app.use(function(req, res, next) {
@@ -35,7 +34,7 @@ it('translate', function(done) {
   assert.equal(i18n.translate('de-ch', 'Hello'), 'Tschau');
   assert.equal(i18n.translate('en', 'Hello'), 'Hello');
   done();
-})
+});
 
 it('__', function(done) {
   var i18n = new Translation(loc);
@@ -45,6 +44,18 @@ it('__', function(done) {
   assert.equal(i18n.t('Hello'), 'Hallo');
   done();
 });
+
+
+it('context', function(done) {
+  var i18n = new Translation(loc);
+  i18n.setLocale('de-CH');
+  assert.equal(i18n.getLocale(), 'de-ch');
+  assert.equal(i18n.t('Hello'), 'Tschau');
+  assert.equal(i18n.__('customer/Hello'), 'Grüezi');
+  assert.equal(i18n.__('customer/big/Hello'), 'Guete Tag');
+  done();
+});
+
 
 it('singular', function(done) {
   var i18n = new Translation(loc);
