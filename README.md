@@ -112,7 +112,109 @@ In your app.js:
 	  <title><%=__("title") %></title>
 	  ...
 
-## loc API:
+## locale definition
+
+
+An example locale definition `en.js` inside `./locales/` may look something like:
+
+	{
+		"Hello": "Hello",
+		"Hello %s, how are you today?": "Hello %s, how are you today?",
+		"weekend": "weekend",
+		"Hello %s, how are you today? How was your %s.": "Hello %s, how are you today? How was your %s.",
+		"Hi": "Hi",
+		"Howdy": "Howdy",
+		"%s cat": {
+			"one": "%s cat",
+			"other": "%s cats"
+		},
+		"There is one monkey in the %%s": {
+			"one": "There is one monkey in the %%s",
+			"other": "There are %d monkeys in the %%s"
+		},
+		"tree": "tree"
+	}
+
+that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
+
+## locale definition with contexts example
+
+### Source Files
+	// locales/en.json
+	{
+		"Home": "Start Page",
+		"Lessons": "Lessons",
+		"About Us": "About Us"
+	}
+
+	// locales/de-ch.json
+	{
+		"Home": "De Hei",
+		"Lessons": "Lektion",
+		"About Us": "Über üüs"
+	}
+
+	// locales/url/de-ch.json
+	{
+		"title": "Tegscht"
+	}
+
+	// locales/url/cms/de-ch.json
+	{
+		"cms title": "CMS Überschrift",
+		"nested": {
+			"keys": "Verschachtelt"
+		}
+	}
+
+
+### Queries
+	// Example 1
+	// locale sep   key        Resulting Value
+	//  ----  ---  ------      ---------------
+	// ['en']['/']['Home'] --> "Start Page"
+
+	// Example 2
+	//  locale     context     sep     key            Resulting Value
+	//  -------  ------------  ---  -----------      -----------------
+	// ['de-ch']['url']['cms']['/']['cms title'] --> "CMS Überschrift"
+
+	// Example 3
+	//  locale     context     sep       key              Resulting Value
+	//  -------  ------------  ---  ----------------      ---------------
+	// ['de-ch']['url']['cms']['/']['nested']['keys'] --> "Verschachtelt"
+
+
+### localeCache
+	{
+		"en": {
+			"Home": "Start Page",
+			"Lessons": "Lessons",
+			"About Us": "About Us"
+		},
+		"de-ch": {
+			"/": {
+				"Home": "De Hei",
+				"Lessons": "Lektion",
+				"About Us": "Über üüs"
+			},
+			"url": {
+				"/": {
+					"title": "Tegscht"
+				},
+				"cms": {
+					"/": {
+						"cms title": "CMS Überschrift",
+						"nested": {
+							"keys": "Verschachtelt"
+						}
+					}
+				}
+			}
+		}
+	}
+
+## methods
 
 ### `__(string, [...])`
 
@@ -170,108 +272,6 @@ To be used with Express.js or another framework that provides a `request` object
 
 This method returns true if the locale specified by `getLocale` matches a language desired by the browser's `Accept-language` header.
 
-
-## locale definition
-
-
-An example locale definition `en.js` inside `./locales/` may look something like:
-
-	{
-		"Hello": "Hello",
-		"Hello %s, how are you today?": "Hello %s, how are you today?",
-		"weekend": "weekend",
-		"Hello %s, how are you today? How was your %s.": "Hello %s, how are you today? How was your %s.",
-		"Hi": "Hi",
-		"Howdy": "Howdy",
-		"%s cat": {
-			"one": "%s cat",
-			"other": "%s cats"
-		},
-		"There is one monkey in the %%s": {
-			"one": "There is one monkey in the %%s",
-			"other": "There are %d monkeys in the %%s"
-		},
-		"tree": "tree"
-	}
-
-that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
-
-## locale definition with contexts example
-
-### Example Source Files:
-	// locales/en.json
-	{
-		"Home": "Start Page",
-		"Lessons": "Lessons",
-		"About Us": "About Us"
-	}
-
-	// locales/de-ch.json
-	{
-		"Home": "De Hei",
-		"Lessons": "Lektion",
-		"About Us": "Über üüs"
-	}
-
-	// locales/url/de-ch.json
-	{
-		"title": "Tegscht"
-	}
-
-	// locales/url/cms/de-ch.json
-	{
-		"cms title": "CMS Überschrift",
-		"nested": {
-			"keys": "Verschachtelt"
-		}
-	}
-
-
-### Queries:
-	// Example 1
-	// locale sep   key        Resulting Value
-	//  ----  ---  ------      ---------------
-	// ['en']['/']['Home'] --> "Start Page"
-
-	// Example 2
-	//  locale     context     sep     key            Resulting Value
-	//  -------  ------------  ---  -----------      -----------------
-	// ['de-ch']['url']['cms']['/']['cms title'] --> "CMS Überschrift"
-
-	// Example 3
-	//  locale     context     sep       key              Resulting Value
-	//  -------  ------------  ---  ----------------      ---------------
-	// ['de-ch']['url']['cms']['/']['nested']['keys'] --> "Verschachtelt"
-
-
-### localeCache:
-	{
-		"en": {
-			"Home": "Start Page",
-			"Lessons": "Lessons",
-			"About Us": "About Us"
-		},
-		"de-ch": {
-			"/": {
-				"Home": "De Hei",
-				"Lessons": "Lektion",
-				"About Us": "Über üüs"
-			},
-			"url": {
-				"/": {
-					"title": "Tegscht"
-				},
-				"cms": {
-					"/": {
-						"cms title": "CMS Überschrift",
-						"nested": {
-							"keys": "Verschachtelt"
-						}
-					}
-				}
-			}
-		}
-	}
 
 
 ## tests

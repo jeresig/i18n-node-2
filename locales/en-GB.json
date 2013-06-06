@@ -1,0 +1,18 @@
+{
+  "Hello": "Hello",
+  "Hello %s, how are you today?": "Hello %s, may I ask how you feel today, if it is not too personal?",
+  "weekend": "labour day",
+  "Hello %s, how are you today? How was your %s?": "Hello %s, how are you today? How was your %s?",
+  "Hi": "Hi",
+  "Howdy": "You look great, how are you today?",
+  "%s cat": {
+    "one": "%s cat",
+    "other": "%s cats"
+  },
+  "There is one monkey in the %%s": {
+    "one": "There is one monkey in the %%s",
+    "other": "There are %d monkeys in the %%s"
+  },
+  "tree": "tree"
+}
+

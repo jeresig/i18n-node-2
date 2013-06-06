@@ -3,7 +3,8 @@
   "description": "lightweight simple translation module with dynamic json storage",
   "version": "0.5.0",
   "author": "Andi Neck <andi.neck@intesso.com>",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Andi Neck",
       "email": "andi.neck@intesso.com"
     }
@@ -15,26 +16,26 @@
   "devDependencies": {
     "express": "~3.2.2",
     "supertest": "~0.6.0",
-    "mocha": "~1.9.0"
+    "mocha": "~1.9.0",
+    "ejs": "~0.8.4"
   },
-
   "scripts": {
     "test": "mocha"
   },
   "keywords": [
-      "localization",
-      "localisation",
-      "translation",
-      "translate",
-      "url",
-      "i18n",
-      "i10n",
-      "g11n",
-      "loc",
-      "rfc1766",
-      "rfc5646",
-      "rfc1766",
-      "bcp47"
+    "localization",
+    "localisation",
+    "translation",
+    "translate",
+    "url",
+    "i18n",
+    "i10n",
+    "g11n",
+    "loc",
+    "rfc1766",
+    "rfc5646",
+    "rfc1766",
+    "bcp47"
   ],
   "repository": "git://github.com/intesso/loc",
   "main": "index",

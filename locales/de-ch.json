@@ -1,0 +1,17 @@
+{
+  "Hello": "Tschau",
+  "Hello %s, how are you today?": "Tschau %s, wie häsch?",
+  "weekend": "Wuchenänd",
+  "Hello %s, how are you today? How was your %s?": "Tschau %s, wie häsch?? Wie isch din %s gsii?",
+  "Hi": "Ciao",
+  "Howdy": "Was lauft",
+  "%s cat": {
+    "one": "%s Chatz",
+    "other": "%s Büsis"
+  },
+  "There is one monkey in the %%s": {
+    "one": "Im %%s sitzt en Aff",
+    "other": "Im Baum sitzed %d Affe"
+  },
+  "tree": "Baum"
+}

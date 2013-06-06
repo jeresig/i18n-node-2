@@ -1,0 +1,98 @@
+{
+	"de": {
+		"/": {
+			"Hello": "Hallo",
+			"Hello %s, how are you today?": "Hallo %s, wie geht es dir heute?",
+			"weekend": "Wochenende",
+			"Hello %s, how are you today? How was your %s?": "Hallo %s, wie geht es dir heute? Wie war dein %s?",
+			"Hi": "Hi",
+			"Howdy": "Hallöchen",
+			"%s cat": {
+				"one": "%s Katze",
+				"other": "%s Katzen"
+			},
+			"There is one monkey in the %%s": {
+				"one": "Im %%s sitzt ein Affe",
+				"other": "Im Baum sitzen %d Affen"
+			},
+			"tree": "Baum"
+		}
+	},
+	"de-ch": {
+		"/": {
+			"Hello": "Tschau",
+			"Hello %s, how are you today?": "Tschau %s, wie häsch?",
+			"weekend": "Wuchenänd",
+			"Hello %s, how are you today? How was your %s?": "Tschau %s, wie häsch?? Wie isch din %s gsii?",
+			"Hi": "Ciao",
+			"Howdy": "Was lauft",
+			"%s cat": {
+				"one": "%s Chatz",
+				"other": "%s Büsis"
+			},
+			"There is one monkey in the %%s": {
+				"one": "Im %%s sitzt en Aff",
+				"other": "Im Baum sitzed %d Affe"
+			},
+			"tree": "Baum"
+		}
+	},
+	"en": {
+		"/": {
+			"Hello": "Hello",
+			"Hello %s, how are you today?": "Hello %s, how are you today?",
+			"weekend": "weekend",
+			"Hello %s, how are you today? How was your %s?": "Hello %s, how are you today? How was your %s?",
+			"Hi": "Hi",
+			"Howdy": "Howdy",
+			"%s cat": {
+				"one": "%s cat",
+				"other": "%s cats"
+			},
+			"There is one monkey in the %%s": {
+				"one": "There is one monkey in the %%s",
+				"other": "There are %d monkeys in the %%s"
+			},
+			"tree": "tree",
+			"Hello %s, how are you today? How was your %s": "Hello %s, how are you today? How was your %s."
+		}
+	},
+	"en-gb": {
+		"/": {
+			"Hello": "Hello",
+			"Hello %s, how are you today?": "Hello %s, may I ask how you feel today, if it is not too personal?",
+			"weekend": "labour day",
+			"Hello %s, how are you today? How was your %s?": "Hello %s, how are you today? How was your %s?",
+			"Hi": "Hi",
+			"Howdy": "You look great, how are you today?",
+			"%s cat": {
+				"one": "%s cat",
+				"other": "%s cats"
+			},
+			"There is one monkey in the %%s": {
+				"one": "There is one monkey in the %%s",
+				"other": "There are %d monkeys in the %%s"
+			},
+			"tree": "tree"
+		}
+	},
+	"en-us": {
+		"/": {
+			"Hello": "Hello",
+			"Hello %s, how are you today?": "Howdy %s?",
+			"weekend": "Wee",
+			"Hello %s, how are you today? How was your %s?": "Howdy %s? How's %s?",
+			"Hi": "Hi",
+			"Howdy": "Howdy",
+			"%s cat": {
+				"one": "%s cat",
+				"other": "%s cats"
+			},
+			"There is one monkey in the %%s": {
+				"one": "One Monk in the %%s",
+				"other": "Three %d Monks in the %%s"
+			},
+			"tree": "tree"
+		}
+	}
+}
