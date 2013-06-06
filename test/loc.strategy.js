@@ -16,8 +16,8 @@ app.use(function cookieTest(req, res, next) {
   assert(res.locals.__n);
   assert(res.locals.t);
   assert(res.locals.tn);
-  assert(res.locals.getLocale());
-  assert(res.locals.isPreferredLocale());
+  assert(res.locals.getLocale);
+  assert(res.locals.isPreferredLocale);
 })
 
 // route

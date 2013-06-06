@@ -7,6 +7,7 @@ var loc = require('./fixtures/setup')(app);
 
 // test that the cookie is set and that req.i18n and res.locals are present.
 app.use(function cookieTest(req, res, next) {
+  next();
   var cookies = res.get('Set-Cookie');
   assert(~cookies.indexOf('lang='));
   assert(req.i18n);
@@ -14,9 +15,8 @@ app.use(function cookieTest(req, res, next) {
   assert(res.locals.__n);
   assert(res.locals.t);
   assert(res.locals.tn);
-  assert(res.locals.getLocale());
-  assert(res.locals.isPreferredLocale());
-  next();
+  assert(res.locals.getLocale);
+  assert(res.locals.isPreferredLocale);
 })
 
 // route
