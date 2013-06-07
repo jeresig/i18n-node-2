@@ -1,6 +1,6 @@
 # loc
 [![Build Status](https://travis-ci.org/intesso/loc.png)](https://travis-ci.org/intesso/loc)
-
+[![NPM version](https://badge.fury.io/js/loc.png)](http://badge.fury.io/js/loc)
 
 ## Features
  * Full featured localization module for express.js
