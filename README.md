@@ -234,6 +234,7 @@ In your app.js:
 
 	module.exports = {
 		index: function(req, res) {
+			// req.i18n.setLocale('es'); // <-- You can set the lang. here based on session or db.
 			req.render("index", {
 				title: req.i18n.__("My Site Title"),
 				desc: req.i18n.__("My Site Description")
