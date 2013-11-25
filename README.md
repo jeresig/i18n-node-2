@@ -20,7 +20,7 @@ Note: If you plan on using the module with Express.js, please view the on that, 
 	// Load Module and Instantiate
 	var i18n = new (require('i18n-2'))({
 		// setup some locales - other locales default to the first locale
-		locales: ['en', 'de']
+		locales: ['en', 'de', 'es']
 	});
 
 	// Use it however you wish
@@ -128,7 +128,7 @@ When you instantiate a new i18n object there are a few options that you can pass
 
 You can pass in the locales in two ways: As an array of strings or as an object of objects. For example:
 
-	locales: ['en', 'de']
+	locales: ['en', 'de', 'es']
 
 This will set two locales (en and de) and read in the JSON contents of both translation files. (By default this is equal to "./locales/NAME.js", you can configure this by changing the `directory` and `extension` options.) Additionally when you pass in an array of locales the first locale is automatically set as the `defaultLocale`.
 
@@ -140,6 +140,9 @@ You can also pass in an object, like so:
 		},
 		"de": {
 			"Hello": "Hallo"
+		},
+		"es": {
+			"Hello": "Hola"
 		}
 	}
 
@@ -222,7 +225,7 @@ In your app.js:
 		// And attach helper methods for use in templates
 		I18n.expressBind(app, {
 			// setup some locales - other locales default to en silently
-			locales: ['en', 'de']
+			locales: ['en', 'de', 'es']
 		});
 
 		// Set up the rest of the Express middleware
@@ -234,6 +237,7 @@ In your app.js:
 
 	module.exports = {
 		index: function(req, res) {
+			// req.i18n.setLocale('es'); // <-- You can set the lang. here based on session or db.
 			req.render("index", {
 				title: req.i18n.__("My Site Title"),
 				desc: req.i18n.__("My Site Description")
