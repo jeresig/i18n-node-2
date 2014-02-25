@@ -18,6 +18,10 @@ var i18n = module.exports = function(opt) {
 	// Put into dev or production mode
 	this.devMode = process.env.NODE_ENV !== "production";
 
+    // If we can't find wanted string in "active" locale,
+    // lookup it up in default locale before using key as translated string.
+    this.fallbackLookupToDefaultLocale = true;
+
 	// Copy over options
 	for (var prop in opt) {
 		this[prop] = opt[prop];
@@ -98,9 +102,9 @@ i18n.registerMethods = function(helpers, req) {
 		} else {
 			helpers[method] = function(req) {
 				return req.i18n[method].bind(req.i18n);
-			};	
+			};
 		}
-		
+
 	});
 
 	return helpers;
@@ -135,9 +139,9 @@ i18n.prototype = {
 	},
 
 	setLocale: function(locale) {
-		
+
 		if (!locale) return;
-		
+
 		if (!this.locales[locale]) {
 			if (this.devMode) {
 				console.warn("Locale (" + locale + ") not found.");
@@ -251,15 +255,18 @@ i18n.prototype = {
 			this.initLocale(locale, {});
 		}
 
-		if (!this.locales[locale][singular]) {
-			this.locales[locale][singular] = plural ?
-				{ one: singular, other: plural } :
-				singular;
-
-			if (this.devMode) {
-				this.writeFile(locale);
-			}
-		}
+        if (!this.locales[locale][singular]) {
+            if (!this.fallbackLookupToDefaultLocale || !this.locales[this.defaultLocale][singular]) {
+                this.locales[locale][singular] = plural ?
+                { one: singular, other: plural } :
+                    singular;
+                if (this.devMode) {
+                    this.writeFile(locale);
+                }
+            } else {
+                return this.locales[this.defaultLocale][singular];
+            }
+        }
 
 		return this.locales[locale][singular];
 	},
