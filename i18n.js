@@ -220,18 +220,17 @@ i18n.prototype = {
 		var accept = req.headers["accept-language"] || "",
 			regExp = /(^|,\s*)([a-z-]+)/gi,
 			self = this,
+			match,
 			prefLocale;
 
-		while ((match = regExp.exec(accept))){
-			var locale = match[2];
+		while (!prefLocale && (match = regExp.exec(accept))){
+			var locale = match[2].toLowerCase();
 			var parts = locale.split("-");
 
-			if (!prefLocale) {
-				if (self.locales[locale]) {
-					prefLocale = locale;
-				} else if (parts.length > 1 && self.locales[parts[0]]) {
-					prefLocale = parts[0];
-				}
+			if (self.locales[locale]) {
+				prefLocale = locale;
+			} else if (parts.length > 1 && self.locales[parts[0]]) {
+				prefLocale = parts[0];
 			}
 		}
 
