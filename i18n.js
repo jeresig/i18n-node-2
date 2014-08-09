@@ -58,8 +58,12 @@ var i18n = module.exports = function(opt) {
 		if (this.query !== false) {
 			this.setLocaleFromQuery(this.request);
 		}
-
+		
 		this.prefLocale = this.preferredLocale();
+		
+		if (this.prefLocale !== false && this.prefLocale !== this.locale) {
+			this.setLocale(this.prefLocale);
+		}
 	}
 };
 
