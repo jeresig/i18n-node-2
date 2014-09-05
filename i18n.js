@@ -161,7 +161,7 @@ i18n.prototype = {
 	setLocaleFromSessionVar: function(req) {
 		req = req || this.request;
 
-		var locale = req.session.locale;
+		var locale = req.session[this.cookieName].toLowerCase();
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
