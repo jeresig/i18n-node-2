@@ -161,21 +161,15 @@ i18n.prototype = {
 	setLocaleFromSessionVar: function (req) {
 		req = req || this.request;
 
-		if (req.session[this.cookieName]) {
-			var locale = req.session[this.cookieName].toLowerCase();
-		} else {
-			if (this.devMode) {
-				console.log("Cookie name: " + this.cookieName + " is not set.");
-			}
-		}
+		var locale = req.session.locale;
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
 				console.log("Overriding locale from query: " + locale);
 			}
-
 			this.setLocale(locale);
 		}
+
 	},
 
 	setLocaleFromQuery: function (req) {
