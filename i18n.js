@@ -158,6 +158,20 @@ i18n.prototype = {
 			this.prefLocale === this.getLocale();
 	},
 
+	setLocaleFromSessionVar: function(req) {
+		req = req || this.request;
+
+		var locale = req.session.locale;
+
+		if (this.locales[locale]) {
+			if (this.devMode) {
+				console.log("Overriding locale from query: " + locale);
+			}
+
+			this.setLocale(locale);
+		}
+	},
+
 	setLocaleFromQuery: function(req) {
 		req = req || this.request;
 
