@@ -18,10 +18,6 @@ var i18n = module.exports = function(opt) {
 	// Put into dev or production mode
 	this.devMode = process.env.NODE_ENV !== "production";
 
-    // If we can't find wanted string in "active" locale,
-    // lookup it up in default locale before using key as translated string.
-    this.fallbackLookupToDefaultLocale = true;
-
 	// Copy over options
 	for (var prop in opt) {
 		this[prop] = opt[prop];
@@ -254,6 +250,16 @@ i18n.prototype = {
 
 			this.initLocale(locale, {});
 		}
+
+        if (!this.locales[locale][singular]) {
+            if (this.devMode) {
+                this.locales[locale][singular] = plural ? { one: singular, other: plural } : singular;
+
+                this.writeFile(locale);
+            } else {
+                this.locales[this.defaultLocale][singular] = plural ? { one: singular, other: plural } : singular;
+            }
+        }
 
         if (!this.locales[locale][singular]) {
             if (!this.fallbackLookupToDefaultLocale || !this.locales[this.defaultLocale][singular]) {
