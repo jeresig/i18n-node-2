@@ -261,19 +261,6 @@ i18n.prototype = {
             }
         }
 
-        if (!this.locales[locale][singular]) {
-            if (!this.fallbackLookupToDefaultLocale || !this.locales[this.defaultLocale][singular]) {
-                this.locales[locale][singular] = plural ?
-                { one: singular, other: plural } :
-                    singular;
-                if (this.devMode) {
-                    this.writeFile(locale);
-                }
-            } else {
-                return this.locales[this.defaultLocale][singular];
-            }
-        }
-
 		return this.locales[locale][singular];
 	},
 
