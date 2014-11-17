@@ -258,7 +258,7 @@ i18n.prototype = {
                 this.writeFile(locale);
             } else {
                 locale = this.defaultLocale;
-                this.locales[this.defaultLocale][singular] = plural ? { one: singular, other: plural } : singular;
+                this.locales[locale][singular] = plural ? { one: singular, other: plural } : singular;
             }
         }
 
