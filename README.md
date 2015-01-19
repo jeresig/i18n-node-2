@@ -319,6 +319,11 @@ run the tests with
 	mocha
 
 
+## history
+
+ - v0.6.0: express 4 support
+
+
 ## license
 
 [MIT License](https://github.com/intesso/loc/blob/master/LICENSE)

@@ -1,7 +1,7 @@
 {
   "name": "loc",
   "description": "lightweight simple translation module with dynamic json storage",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Andi Neck <andi.neck@intesso.com>",
   "contributors": [
     {
@@ -27,7 +27,11 @@
     "localisation",
     "translation",
     "translate",
+    "internationalization",
+    "internationalisation",
     "url",
+    "url location",
+    "express middleware",
     "i18n",
     "i10n",
     "g11n",
