@@ -70,6 +70,34 @@ module.exports = {
 		assert.equal(plural, 'Im Baum sitzen 3 Affen');
 	},
 
+	'check object notation': function() {
+		var i18n = new I18n({
+			locales: {
+				en: {
+					a: {
+						b: 'Hello',
+						c: 'Hello %s, how are you today?'
+					}
+				},
+				de: {
+					a: {
+						b: 'Hallo',
+						c: 'Hallo %s, wie geht es dir heute?'
+					}
+				}
+			},
+			objectNotation: true
+		});
+
+		i18n.setLocale('en');
+		assert.equal(i18n.__('a.b'), 'Hello');
+		assert.equal(i18n.__('a.c', 'Marcus'), 'Hello Marcus, how are you today?');
+
+		i18n.setLocale('de');
+		assert.equal(i18n.__('a.b'), 'Hallo');
+		assert.equal(i18n.__('a.c', 'Marcus'), 'Hallo Marcus, wie geht es dir heute?');
+	},
+
 	'check variables': function () {
 		var i18n = new I18n({
 			locales: ['en', 'de']

@@ -219,6 +219,25 @@ Copy the `__`, `__n`, `getLocale`, and `isPreferredLocale` methods over to the o
 
 By default the `devMode` property is automatically set to be `false` if Node.js is in production mode and `true` otherwise. You can override this by setting a different value to the `devMode` option.
 
+### `objectNotation`
+
+Allow nesting of translation strings. This option doesn't make sense for natural language lookup strings, but instead for object path strings. So instead of `__('page.link')` producing a locale that looks like this:
+
+	{
+		"page.link": "https://github.com"
+	}
+
+it will now look like this:
+
+	{
+		"page": {
+			"link": "https://github.com"
+		}
+	}
+
+This option is useful primarily as an organizational tool.
+
+
 ## Using with Express.js
 
 ### Load and Configure
