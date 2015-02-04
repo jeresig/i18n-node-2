@@ -251,17 +251,50 @@ i18n.prototype = {
 			this.initLocale(locale, {});
 		}
 
-		if (!this.locales[locale][singular]) {
-			this.locales[locale][singular] = plural ?
-				{ one: singular, other: plural } :
-				singular;
+		if( !this.objectNotation )
+		{
+			// just plug singular into lookup table
+			if (!this.locales[locale][singular]) {
+				this.locales[locale][singular] = plural ?
+					{ one: singular, other: plural } :
+					singular;
 
-			if (this.devMode) {
-				this.writeFile(locale);
+				if (this.devMode) {
+					this.writeFile(locale);
+				}
 			}
-		}
 
-		return this.locales[locale][singular];
+			return this.locales[locale][singular];
+		}
+		else
+		{
+			var delimiter = /^.$/.test(this.objectNotation) ? this.objectNotation : '.';
+			var parts = singular.split(delimiter);
+			var scope = this.locales[locale];
+
+			for(var i=0; i<parts.length; i++)
+			{
+				if( !scope[parts[i]] )
+				{
+					if( i < parts.length-1 )
+						scope[parts[i]] = {};
+					else
+					{
+						scope[parts[i]] = plural ?
+							{ one: singular, other: plural } :
+							singular;
+
+						if( this.devMode ){
+							this.writeFile(locale);
+						}
+					}
+				}
+
+				scope = scope[parts[i]];
+			}
+
+			return scope;
+		}
 	},
 
 	// try reading a file
