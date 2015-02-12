@@ -212,7 +212,7 @@ By default the `query` option is set to true. Setting the `query` option to `fal
 Copy the `__`, `__n`, `getLocale`, and `isPreferredLocale` methods over to the object specified by the `register` property.
 
 	var obj = {};
-	new I18n({ 'register': obj })
+	new i18n({ 'register': obj })
 	console.log( obj.__("Hello.") );
 
 ### `devMode`
@@ -227,7 +227,7 @@ In your app.js:
 
 	// load modules
 	var express = require('express'),
-		I18n = require('i18n-2');
+		i18n = require('i18n-2');
 
 	// Express Configuration
 	app.configure(function() {
@@ -236,7 +236,7 @@ In your app.js:
 
 		// Attach the i18n property to the express request object
 		// And attach helper methods for use in templates
-		I18n.expressBind(app, {
+		i18n.expressBind(app, {
 			// setup some locales - other locales default to en silently
 			locales: ['en', 'de'],
 			// change the cookie name from 'lang' to 'locale'
