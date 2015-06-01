@@ -203,10 +203,10 @@ Optional custom methods to override `JSON.parse()` and `JSON.stringify()`, respe
 		locales: ['en', 'de'],
 		extension: '.yaml',
 		parse: function (data) {
-			return require('yaml-js').safeLoad(data);
+			return require('js-yaml').safeLoad(data);
 		},
 		dump: function (data) {
-			return require('yaml-js').safeDump(data);
+			return require('js-yaml').safeDump(data);
 		}
 	});
 
