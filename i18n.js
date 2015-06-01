@@ -278,7 +278,8 @@ i18n.prototype = {
 
 			try {
 				// parsing filecontents to locales[locale]
-				this.initLocale(locale, JSON.parse(localeFile));
+				var parse = this.parse || JSON.parse;
+				this.initLocale(locale, parse(localeFile));
 
 			} catch (e) {
 				console.error('unable to parse locales from file (maybe ' + file +
@@ -321,8 +322,11 @@ i18n.prototype = {
 			var target = this.locateFile(locale),
 				tmp = target + ".tmp";
 
-			fs.writeFileSync(tmp, JSON.stringify(
-				this.locales[locale], null, "\t"), "utf8");
+			// Stringify data, or run custom dump method if supplied.
+			var dump = this.dump || function (data) {
+				return JSON.stringify(data, null, "\t");
+			}
+			fs.writeFileSync(tmp, dump(this.locales[locale]), "utf8");
 
 			if (fs.statSync(tmp).isFile()) {
 				fs.renameSync(tmp, target);
@@ -349,9 +353,9 @@ i18n.prototype = {
 
 			// Only cache the files when we're not in dev mode
 			if (!this.devMode) {
-			    var file = this.locateFile(locale);
+				var file = this.locateFile(locale);
 				if ( !i18n.localeCache[file] ) {
-			    	i18n.localeCache[file] = data;
+					i18n.localeCache[file] = data;
 				}
 			}
 		}

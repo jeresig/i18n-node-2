@@ -1,7 +1,7 @@
 # Node.js: i18n-2
 
  * Designed to work out-of-the-box with Express.js
- * Lightweight simple translation module with dynamic json storage. 
+ * Lightweight simple translation module with dynamic json storage.
  * Uses common __('...') syntax in app and templates.
  * Stores language files in json files compatible to [webtranslateit](http://webtranslateit.com/) json format.
  * Adds new strings on-the-fly when first used in your app.
@@ -46,7 +46,7 @@ For example:
 
 this puts **Hello Marcus, how are you today?**. You might also add endless arguments or even nest it.
 
-	var greeting = i18n.__('Hello %s, how are you today? How was your %s?', 
+	var greeting = i18n.__('Hello %s, how are you today? How was your %s?',
 		'Marcus', i18n.__('weekend'));
 
 which puts **Hello Marcus, how are you today? How was your weekend?**
@@ -195,6 +195,21 @@ A generated `en.js` inside `./locales/` may look something like:
 
 that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
 
+### `parse(data)` and `dump(data)`
+
+Optional custom methods to override `JSON.parse()` and `JSON.stringify()`, respectively. One possible use for this is to allow for file formats other than JSON. For example:
+
+	var i18n = new (require('i18n-2'))({
+		locales: ['en', 'de'],
+		extension: '.yaml',
+		parse: function (data) {
+			return require('js-yaml').safeLoad(data);
+		},
+		dump: function (data) {
+			return require('js-yaml').safeDump(data);
+		}
+	});
+
 ### `request`, `subdomain`, and `query`
 
 These options are to be used with Express.js or another framework that provides a `request` object. In order to use the `subdomain` and `query` options you must specify the `request` option, passing in the Express.js `request` object.
@@ -242,7 +257,7 @@ In your app.js:
 			// change the cookie name from 'lang' to 'locale'
 			cookieName: 'locale'
 		});
-		
+
 		// This is how you'd set a locale from req.cookies.
 		// Don't forget to set the cookie either on the client or in your Express app.
 		app.use(function(req, res, next) {
@@ -292,4 +307,4 @@ In your app.js:
 * 0.3.0: added configure and init with express support (calling guessLanguage() via 'accept-language')
 * 0.2.0: added plurals
 * 0.1.0: added tests
-* 0.0.1: start 
+* 0.0.1: start
