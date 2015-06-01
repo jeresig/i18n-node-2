@@ -199,16 +199,16 @@ that file can be edited or just uploaded to [webtranslateit](http://docs.webtran
 
 Optional custom methods to override `JSON.parse()` and `JSON.stringify()`, respectively. One possible use for this is to allow for file formats other than JSON. For example:
 
-var i18n = new (require('i18n-2'))({
-  locales: ['en', 'de'],
-  extension: '.yaml',
-  parse: function (data) {
-    return require('yaml-js').safeLoad(data);
-  },
-  dump: function (data) {
-    return require('yaml-js').safeDump(data);
-  }
-});
+	var i18n = new (require('i18n-2'))({
+		locales: ['en', 'de'],
+		extension: '.yaml',
+		parse: function (data) {
+			return require('yaml-js').safeLoad(data);
+		},
+		dump: function (data) {
+			return require('yaml-js').safeDump(data);
+		}
+	});
 
 ### `request`, `subdomain`, and `query`
 
