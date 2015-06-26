@@ -1,8 +1,8 @@
 language: node_js
 node_js:
+  - "0.12"
   - "0.11"
   - "0.10"
-  - "0.8"
 
 before_script:
   - "npm install"
@@ -12,4 +12,3 @@ script:
 
 notifications:
   email: andi.neck@intesso.com
-
