@@ -293,14 +293,16 @@ i18n.prototype = {
 		}
 
 		if (!this.locales[locale][singular]) {
+            if (this.devMode) {
 			this.locales[locale][singular] = plural ?
 			{ one: singular, other: plural } :
 					singular;
 
-			if (this.devMode) {
-				this.writeFile(locale);
-			}
-		}
+                this.writeFile(locale);
+            } else {
+                locale = this.defaultLocale;
+            }
+        }
 
 		return dotNotation(this.locales[locale], singular);
 	},
