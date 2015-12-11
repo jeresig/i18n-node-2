@@ -37,7 +37,7 @@ var i18n = module.exports = function (opt) {
 	var self = this;
 
 	// Put into dev or production mode
-	this.devMode = process.env.NODE_ENV !== this.getProductionEnvName();
+	this.devMode = process.env.NODE_ENV !== this.productionEnvName;
 
 	// Copy over options
 	for (var prop in opt) {
@@ -201,10 +201,6 @@ i18n.prototype = {
 
 	getLocale: function () {
 		return this.locale;
-	},
-
-	getProductionEnvName: function () {
-		return this.productionEnvName;
 	},
 
 	isPreferredLocale: function () {
