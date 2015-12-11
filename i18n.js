@@ -37,7 +37,7 @@ var i18n = module.exports = function (opt) {
 	var self = this;
 
 	// Put into dev or production mode
-	this.devMode = process.env.NODE_ENV !== "production";
+	this.devMode = process.env.NODE_ENV !== this.productionEnvName;
 
 	// Copy over options
 	for (var prop in opt) {
@@ -141,6 +141,7 @@ i18n.prototype = {
 	directory: "./locales",
 	cookieName: "lang",
 	sessionVarName: "locale",
+	productionEnvName: "production",
 	indent: "\t",
 
 	parse: JSON.parse,
