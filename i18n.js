@@ -72,6 +72,12 @@ var i18n = module.exports = function (opt) {
 	}
 
 	if (this.request) {
+		this.prefLocale = this.preferredLocale();
+
+		if (this.prefLocale !== false && this.prefLocale !== this.locale) {
+			this.setLocale(this.prefLocale);
+		}
+		
 		if (this.subdomain) {
 			this.setLocaleFromSubdomain(this.request);
 		}
@@ -82,12 +88,6 @@ var i18n = module.exports = function (opt) {
 
 		if (this.session !== false) {
 			this.setLocaleFromSessionVar(this.request);
-		}
-
-		this.prefLocale = this.preferredLocale();
-
-		if (this.prefLocale !== false && this.prefLocale !== this.locale) {
-			this.setLocale(this.prefLocale);
 		}
 	}
 };
