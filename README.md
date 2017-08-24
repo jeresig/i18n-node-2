@@ -10,22 +10,22 @@
 ## Installation
 
 Run the following:
-
-    npm install i18n-2
-
+```
+npm install i18n-2
+```
 ## Simple Example
 
 Note: If you plan on using the module with Express.js, please view [Using with Express.js](#using-with-expressjs), below.
+```javascript
+// Load Module and Instantiate
+var i18n = new (require('i18n-2'))({
+    // setup some locales - other locales default to the first locale
+    locales: ['en', 'de']
+});
 
-    // Load Module and Instantiate
-    var i18n = new (require('i18n-2'))({
-        // setup some locales - other locales default to the first locale
-        locales: ['en', 'de']
-    });
-
-    // Use it however you wish
-    console.log( i18n.__("Hello!") );
-
+// Use it however you wish
+console.log( i18n.__("Hello!") );
+```
 ## API:
 
 ### `new i18n(options)`
@@ -41,23 +41,23 @@ You'll use this method to attach the i18n functionality to the request object in
 Translates a string according to the current locale. Also supports sprintf syntax, allowing you to replace text, using the node-sprintf module.
 
 For example:
-
-    var greeting = i18n.__('Hello %s, how are you today?', 'Marcus');
-
+```javascript
+var greeting = i18n.__('Hello %s, how are you today?', 'Marcus');
+```
 this puts **Hello Marcus, how are you today?**. You might also add endless arguments or even nest it.
-
-    var greeting = i18n.__('Hello %s, how are you today? How was your %s?',
-        'Marcus', i18n.__('weekend'));
-
+```javascript
+var greeting = i18n.__('Hello %s, how are you today? How was your %s?',
+    'Marcus', i18n.__('weekend'));
+```
 which puts **Hello Marcus, how are you today? How was your weekend?**
 
 You might even use dynamic variables. They get added to the current locale file if they do not yet exist.
-
-    var greetings = ['Hi', 'Hello', 'Howdy'];
-    for (var i = 0; i < greetings.length; i++) {
-        console.log( i18n.__(greetings[i]) );
-    };
-
+```javascript
+var greetings = ['Hi', 'Hello', 'Howdy'];
+for (var i = 0; i < greetings.length; i++) {
+    console.log( i18n.__(greetings[i]) );
+};
+```
 which outputs:
 
     Hi
@@ -65,45 +65,45 @@ which outputs:
     Howdy
 
 You can also use nested object :
-
-    {
-        'foo': {
-            'bar': 'ok'
-        }
+```json
+{
+    "foo": {
+        "bar": "ok"
     }
-
+}
+```
 And use dot notation to access the value :
-
-    i18n.__('foo.bar');
-
+```javascript
+i18n.__('foo.bar');
+```
 ### `__n(one, other, count, [...])`
 
 Different plural forms are supported as a response to `count`:
-
-    var singular = i18n.__n('%s cat', '%s cats', 1);
-    var plural = i18n.__n('%s cat', '%s cats', 3);
-
+```javascript
+var singular = i18n.__n('%s cat', '%s cats', 1);
+var plural = i18n.__n('%s cat', '%s cats', 3);
+```
 this gives you **1 cat** and **3 cats**. As with `__(...)` these could be nested:
-
-    var singular = i18n.__n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 1, 'tree');
-    var plural = i18n.__n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 3, 'tree');
-
+```javascript
+var singular = i18n.__n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 1, 'tree');
+var plural = i18n.__n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 3, 'tree');
+```
 putting **There is one monkey in the tree** or **There are 3 monkeys in the tree**.
 
 You may also use in your locale object/file :
-
-    {
-        'catEat': {
-            'one': '%d cat eat the %s',
-            'other': '%d cat eat the %s'
-        }
+```json
+{
+    "catEat": {
+        "one": "%d cat eat the %s",
+        "other": "%d cat eat the %s"
     }
-
+}
+```
 and use `__n()` as you would use `__()` (directly, or from locale) :
-
-    var singular = i18n.__n('catEat', 1, 'mouse');
-    var plural = i18n.__n('catEat', 10, 'mouse')
-
+```javascript
+var singular = i18n.__n('catEat', 1, 'mouse');
+var plural = i18n.__n('catEat', 10, 'mouse');
+```
 ### `getLocale()`
 
 Returns a string containing the current locale. If no locale has been specified then it default to the value specified in `defaultLocale`.
@@ -119,13 +119,13 @@ To be used with Express.js or another framework that provides a `request` object
 This method takes in an Express.js request object, looks at the query property, and specifically at the `lang` parameter. Reading the value of that parameter will then set the locale.
 
 For example:
-
-    example.com/?lang=de
-
+```
+example.com/?lang=de
+```
 Will then do:
-
-    setLocale('de')
-
+```javascript
+setLocale('de')
+```
 ### `setLocaleFromSessionVar([request])`
 
 To be used with Express.js or another framework that provides a `request` object. Generally you would want to use this by setting the `session` option to `true`.
@@ -144,13 +144,13 @@ To be used with Express.js or another framework that provides a `request` object
 This method takes in an Express.js request object, looks at the hostname, and extracts the sub-domain. Reading the value of the subdomain the locale is then set.
 
 For example:
-
-    de.example.com
-
+```
+de.example.com
+```
 Will then do:
-
-    setLocale('de')
-
+```javascript
+setLocale('de')
+```
 ### `setLocaleFromCookie([request])`
 
 To be used with Express.js or another framework that provides a `request` object. This method takes a request object, looks at it's cookies property and tries to find a cookie named `cookieName` (default: `lang`).
@@ -158,29 +158,27 @@ To be used with Express.js or another framework that provides a `request` object
 See [Using with Express.js](#using-with-expressjs) for a complete example.
 
 For example:
-
-    console.log(req.cookies.lang)
-    => 'de'
-    setLocaleFromCookie()
-
+```javascript
+console.log(req.cookies.lang) //=> 'de'
+setLocaleFromCookie()
+```
 Will then do:
-
-    setLocale('de')
-
+```javascript
+setLocale('de')
+```
 ### `setLocaleFromEnvironmentVariable()`
 
 To be used with some desktop application environment (like [Electron](http://electron.atom.io/) or [NW.js](http://nwjs.io/)) or console. This method tries to get language code from `LANG` environment variable. For example, it get `de` from `de_DE.UTF-8`.
 
 For example:
-
-    console.log(process.env.LANG)
-    => 'en_US.UTF-8'
-    setLocaleFromEnvironmentVariable()
-
+```javascript
+console.log(process.env.LANG) //=> 'en_US.UTF-8'
+setLocaleFromEnvironmentVariable()
+```
 Will then do:
-
-    setLocale('en')
-
+```javascript
+setLocale('en')
+```
 ### `isPreferredLocale()`
 
 To be used with Express.js or another framework that provides a `request` object. This method works if a `request` option has been specified when the i18n object was instantiated.
@@ -194,22 +192,22 @@ When you instantiate a new i18n object there are a few options that you can pass
 ### `locales`
 
 You can pass in the locales in two ways: As an array of strings or as an object of objects. For example:
-
-    locales: ['en', 'de']
-
+```javascript
+locales: ['en', 'de']
+```
 This will set two locales (en and de) and read in the JSON contents of both translation files. (By default this is equal to "./locales/NAME.js", you can configure this by changing the `directory` and `extension` options.) Additionally when you pass in an array of locales the first locale is automatically set as the `defaultLocale`.
 
 You can also pass in an object, like so:
-
-    locales: {
-        "en": {
-            "Hello": "Hello"
-        },
-        "de": {
-            "Hello": "Hallo"
-        }
+```
+locales: {
+    "en": {
+        "Hello": "Hello"
+    },
+    "de": {
+        "Hello": "Hallo"
     }
-
+}
+```
 In this particular case no files will ever be read when doing a translation. This is ideal if you are loading your translations from a different source. Note that no `defaultLocale` is set when you pass in an object, you'll need to set it yourself.
 
 ### `defaultLocale`
@@ -225,25 +223,25 @@ When your server is in production mode it will read these files only once and th
 When in development, or testing, mode the files will be read on every instantiation of the `i18n` object. Additionally newly-detected strings will be automatically added, and written out, to the locale JSON files.
 
 A generated `en.js` inside `./locales/` may look something like:
-
-    {
-        "Hello": "Hello",
-        "Hello %s, how are you today?": "Hello %s, how are you today?",
-        "weekend": "weekend",
-        "Hello %s, how are you today? How was your %s.": "Hello %s, how are you today? How was your %s.",
-        "Hi": "Hi",
-        "Howdy": "Howdy",
-        "%s cat": {
-            "one": "%s cat",
-            "other": "%s cats"
-        },
-        "There is one monkey in the %%s": {
-            "one": "There is one monkey in the %%s",
-            "other": "There are %d monkeys in the %%s"
-        },
-        "tree": "tree"
-    }
-
+```json
+{
+    "Hello": "Hello",
+    "Hello %s, how are you today?": "Hello %s, how are you today?",
+    "weekend": "weekend",
+    "Hello %s, how are you today? How was your %s.": "Hello %s, how are you today? How was your %s.",
+    "Hi": "Hi",
+    "Howdy": "Howdy",
+    "%s cat": {
+        "one": "%s cat",
+        "other": "%s cats"
+    },
+    "There is one monkey in the %%s": {
+        "one": "There is one monkey in the %%s",
+        "other": "There are %d monkeys in the %%s"
+    },
+    "tree": "tree"
+}
+```
 that file can be edited or just uploaded to [webtranslateit](http://docs.webtranslateit.com/file_formats/) for any kind of collaborative translation workflow.
 
 ### `base`
@@ -255,27 +253,27 @@ It will take effect only when `locales` are provided as an array and `base` is a
 Each locale is merged with its base (if found) such that locale translations override the base. If the base file does not exist or is not parsable - it will not be created.
 
 Following example takes `de.js` and `en.js` as bases respectively for each locale:
-
-    locales: ['at-de', 'de-de', 'at-en', 'de-en'],
-    base: function(locale) {
-        return locale.slice(-2);
-    }
-
+```javascript
+locales: ['at-de', 'de-de', 'at-en', 'de-en'],
+base: function(locale) {
+    return locale.slice(-2);
+}
+```
 ### `parse(data, [indent])` and `dump(data)`
 
 Optional custom methods to override `JSON.parse()` and `JSON.stringify()`, respectively. One possible use for this is to allow for file formats other than JSON. For example:
-
-    var i18n = new (require('i18n-2'))({
-        locales: ['en', 'de'],
-        extension: '.yaml',
-        parse: function (data) {
-            return require('js-yaml').safeLoad(data);
-        },
-        dump: function (data) {
-            return require('js-yaml').safeDump(data);
-        }
-    });
-
+```javascript
+var i18n = new (require('i18n-2'))({
+    locales: ['en', 'de'],
+    extension: '.yaml',
+    parse: function (data) {
+        return require('js-yaml').safeLoad(data);
+    },
+    dump: function (data) {
+        return require('js-yaml').safeDump(data);
+    }
+});
+```
 ### `request`, `subdomain`, `query` and `session`
 
 These options are to be used with Express.js or another framework that provides a `request` object. In order to use the `subdomain` and `query` options you must specify the `request` option, passing in the Express.js `request` object.
@@ -293,11 +291,11 @@ By default the `query` option is set to true. Setting the `query` option to `fal
 ### `register`
 
 Copy the `__`, `__n`, `getLocale`, and `isPreferredLocale` methods over to the object specified by the `register` property.
-
-    var obj = {};
-    new i18n({ 'register': obj })
-    console.log( obj.__("Hello.") );
-
+```javascript
+var obj = {};
+new i18n({ 'register': obj })
+console.log( obj.__("Hello.") );
+```
 ### `devMode`
 
 By default the `devMode` property is automatically set to be `false` if Node.js is in production mode and `true` otherwise. You can override this by setting a different value to the `devMode` option.
@@ -311,53 +309,53 @@ Sets the indent string for `JSON.stringify` when updating the locale files. Defa
 ### Load and Configure
 
 In your app.js:
+```javascript
+// load modules
+var express = require('express'),
+    i18n = require('i18n-2');
 
-    // load modules
-    var express = require('express'),
-        i18n = require('i18n-2');
+// Attach the i18n property to the express request object
+// And attach helper methods for use in templates
+i18n.expressBind(app, {
+    // setup some locales - other locales default to en silently
+    locales: ['en', 'de'],
+    // change the cookie name from 'lang' to 'locale'
+    cookieName: 'locale'
+});
 
-    // Attach the i18n property to the express request object
-    // And attach helper methods for use in templates
-    i18n.expressBind(app, {
-        // setup some locales - other locales default to en silently
-        locales: ['en', 'de'],
-        // change the cookie name from 'lang' to 'locale'
-        cookieName: 'locale'
-    });
+// This is how you'd set a locale from req.cookies.
+// Don't forget to set the cookie either on the client or in your Express app.
+app.use(function(req, res, next) {
+    req.i18n.setLocaleFromCookie();
+    next();
+});
 
-    // This is how you'd set a locale from req.cookies.
-    // Don't forget to set the cookie either on the client or in your Express app.
-    app.use(function(req, res, next) {
-        req.i18n.setLocaleFromCookie();
-        next();
-    });
-
-    // Set up the rest of the Express middleware
-    app.use(app.router);
-    app.use(express.static(__dirname + '/public'));
-
+// Set up the rest of the Express middleware
+app.use(app.router);
+app.use(express.static(__dirname + '/public'));
+```
 ### Inside Your Express View
-
-    module.exports = {
-        index: function(req, res) {
-            res.render("index", {
-                title: req.i18n.__("My Site Title"),
-                desc: req.i18n.__("My Site Description")
-            });
-        }
-    };
-
+```javascript
+module.exports = {
+    index: function(req, res) {
+        res.render("index", {
+            title: req.i18n.__("My Site Title"),
+            desc: req.i18n.__("My Site Description")
+        });
+    }
+};
+```
 ### Inside Your Templates
 
 (This example uses the Swig templating system.)
+```
+{% extends "page.swig" %}
 
-    {% extends "page.swig" %}
-
-    {% block content %}
-    <h1>{{ __("Welcome to:") }} {{ title }}</h1>
-    <p>{{ desc }}</p>
-    {% endblock %}
-
+{% block content %}
+<h1>{{ __("Welcome to:") }} {{ title }}</h1>
+<p>{{ desc }}</p>
+{% endblock %}
+```
 ## Changelog
 
 * 0.6.0: added setLocaleFromEnvironmentVariable()
