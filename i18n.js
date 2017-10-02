@@ -10,7 +10,10 @@
 // dependencies
 var vsprintf = require("sprintf").vsprintf,
 		fs = require("fs"),
-		path = require("path");
+		path = require("path"),
+		debugLog = require('debug')('i18n-2:log'),
+    	debugWarn = require('debug')('i18n-2:warn'),
+    	debugError = require('debug')('i18n-2:err');
 
 
 function dotNotation (obj, is, value) {
@@ -68,7 +71,7 @@ var i18n = module.exports = function (opt) {
 
 	// Check the defaultLocale
 	if (!this.locales[this.defaultLocale]) {
-		console.error("Not a valid default locale.");
+		debugError("Not a valid default locale.");
 	}
 
 	if (this.request) {
@@ -189,7 +192,7 @@ i18n.prototype = {
 
 		if (!this.locales[locale]) {
 			if (this.devMode) {
-				console.warn("Locale (" + locale + ") not found.");
+				debugWarn("Locale (" + locale + ") not found.");
 			}
 
 			locale = this.defaultLocale;
@@ -218,7 +221,7 @@ i18n.prototype = {
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
-				console.log("Overriding locale from query: " + locale);
+				debugLog("Overriding locale from query: " + locale);
 			}
 			this.setLocale(locale);
 		}
@@ -236,7 +239,7 @@ i18n.prototype = {
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
-				console.log("Overriding locale from query: " + locale);
+				debugLog("Overriding locale from query: " + locale);
 			}
 
 			this.setLocale(locale);
@@ -252,7 +255,7 @@ i18n.prototype = {
 
 		if (/^([^.]+)/.test(req.headers.host) && this.locales[RegExp.$1]) {
 			if (this.devMode) {
-				console.log("Overriding locale from host: " + RegExp.$1);
+				debugLog("Overriding locale from host: " + RegExp.$1);
 			}
 
 			this.setLocale(RegExp.$1);
@@ -270,7 +273,7 @@ i18n.prototype = {
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
-				console.log("Overriding locale from cookie: " + locale);
+				debugLog("Overriding locale from cookie: " + locale);
 			}
 
 			this.setLocale(locale);
@@ -284,7 +287,7 @@ i18n.prototype = {
 		var locale = process.env.LANG.split("_")[0];
 		if (this.locales[locale]) {
 			if (this.devMode) {
-				console.log("Overriding locale from environment variable: " + locale);
+				debugLog("Overriding locale from environment variable: " + locale);
 			}
 
 			this.setLocale(locale);
@@ -321,7 +324,7 @@ i18n.prototype = {
 	translate: function (locale, singular, plural) {
 		if (!locale || !this.locales[locale]) {
 			if (this.devMode) {
-				console.warn("WARN: No locale found. Using the default (" +
+				debugWarn("WARN: No locale found. Using the default (" +
 						this.defaultLocale + ") as current locale");
 			}
 
@@ -360,14 +363,14 @@ i18n.prototype = {
 				try {
 					baseFilename = this.base(locale);
 				} catch (e) {
-					console.error('base function threw exception for locale %s', locale, e);
+					debugError('base function threw exception for locale %s', locale, e);
 				}
 
 				if (typeof baseFilename === "string") {
 					try {
 						base = this.parse(fs.readFileSync(this.locateFile(baseFilename)));
 					} catch (e) {
-						console.error('unable to read or parse base file %s for locale %s', baseFilename, locale, e);
+						debugError('unable to read or parse base file %s for locale %s', baseFilename, locale, e);
 					}
 				}
 			}
@@ -387,7 +390,7 @@ i18n.prototype = {
 				// putting content to locales[locale]
 				this.initLocale(locale, content);
 			} catch (e) {
-				console.error('unable to parse locales from file (maybe ' + file +
+				debugError('unable to parse locales from file (maybe ' + file +
 						' is empty or invalid ' + this.extension + '?): ', e);
 			}
 
@@ -416,7 +419,7 @@ i18n.prototype = {
 
 		} catch (e) {
 			if (this.devMode) {
-				console.log('creating locales dir in: ' + this.directory);
+				debugLog('creating locales dir in: ' + this.directory);
 			}
 
 			fs.mkdirSync(this.directory, 0o755);
@@ -438,12 +441,12 @@ i18n.prototype = {
 				fs.renameSync(tmp, target);
 
 			} else {
-				console.error('unable to write locales to file (either ' + tmp +
+				debugError('unable to write locales to file (either ' + tmp +
 						' or ' + target + ' are not writeable?): ');
 			}
 
 		} catch (e) {
-			console.error('unexpected error writing files (either ' + tmp +
+			debugError('unexpected error writing files (either ' + tmp +
 					' or ' + target + ' are not writeable?): ', e);
 		}
 	},

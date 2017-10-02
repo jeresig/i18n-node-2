@@ -356,6 +356,16 @@ module.exports = {
 <p>{{ desc }}</p>
 {% endblock %}
 ```
+
+## Debugging
+
+`i18n-2` uses the [debug module](https://github.com/visionmedia/debug) to output debug messages to the console. To output all debug messages, set the `DEBUG` environment variable:
+
+```
+DEBUG=i18n-2:*
+```
+This will output debugging messages from the module.
+
 ## Changelog
 
 * 0.6.0: added setLocaleFromEnvironmentVariable()
