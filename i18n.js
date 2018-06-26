@@ -8,7 +8,7 @@
  */
 
 // dependencies
-var vsprintf = require("sprintf").vsprintf,
+var vsprintf = require("sprintf-js").vsprintf,
 		fs = require("fs"),
 		path = require("path"),
 		debugLog = require('debug')('i18n-2:log'),

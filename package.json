@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "sprintf": "^0.1.5"
+    "sprintf-js": "^1.1.1"
   },
   "devDependencies": {
     "expresso": ">=0.9.2",
