@@ -142,6 +142,7 @@ i18n.prototype = {
 	defaultLocale: "en",
 	extension: ".js",
 	directory: "./locales",
+	queryName: "lang",
 	cookieName: "lang",
 	sessionVarName: "locale",
 	indent: "\t",
@@ -231,11 +232,11 @@ i18n.prototype = {
 	setLocaleFromQuery: function (req) {
 		req = req || this.request;
 
-		if (!req || !req.query || !req.query.lang) {
+		if (!req || !req.query || !req.query[this.queryName]) {
 			return;
 		}
 
-		var locale = (req.query.lang+'').toLowerCase();
+		var locale = req.query[this.queryName].toLowerCase();
 
 		if (this.locales[locale]) {
 			if (this.devMode) {
