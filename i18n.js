@@ -330,6 +330,10 @@ i18n.prototype = {
 
 			locale = this.defaultLocale;
 
+			if ((this.devMode) && (fs.existsSync(this.locateFile(locale)))) {
+				throw new Error('Please correct potential parse errors in i18n JSON file ' + this.locateFile(locale));
+			}
+			
 			this.initLocale(locale, {});
 		}
 
