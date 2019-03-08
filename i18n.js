@@ -138,7 +138,7 @@ i18n.registerMethods = function (helpers, req) {
 
 i18n.prototype = {
   defaultLocale: "en",
-  extension: ".js",
+  extension: ".json",
   directory: "./locales",
   queryName: "lang",
   cookieName: "lang",
