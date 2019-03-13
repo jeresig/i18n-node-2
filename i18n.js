@@ -8,7 +8,7 @@
  */
 
 // dependencies
-var vsprintf = require("sprintf-js").vsprintf,
+var vsprintf = require("sprintf").vsprintf,
 		fs = require("fs"),
 		path = require("path"),
 		debugLog = require('debug')('i18n-2:log'),
@@ -381,9 +381,7 @@ i18n.prototype = {
 
 				if (base) {
 					// writing content to the base and swapping
-					for (var prop in content) {
-						base[prop] = content[prop];
-					}
+					this.mergeLocaleWithBase(content, base);
 					content = base;
 				}
 
@@ -468,5 +466,21 @@ i18n.prototype = {
 				}
 			}
 		}
-	}
+	},
+	hasNestedObject: function (object) {
+		if (typeof object === 'object'){
+			return true;
+		}
+	},
+	mergeLocaleWithBase(elements, base){
+		for (element in elements){
+			const baseValue = base[element];
+			const localeValue = elements[element];
+			if (this.hasNestedObject(localeValue)){
+				this.mergeLocaleWithBase(localeValue, baseValue);
+			} else {
+					(base[element] = elements[element])
+				}
+			}
+		}
 };
