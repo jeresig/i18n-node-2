@@ -231,7 +231,7 @@ i18n.prototype = {
 	setLocaleFromQuery: function (req) {
 		req = req || this.request;
 
-		if (!req || !req.query || !req.query.lang) {
+		if (!req || !req.query || !req.query.lang || typeof req.query.lang !== 'string') {
 			return;
 		}
 
