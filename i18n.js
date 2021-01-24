@@ -39,7 +39,7 @@ const i18n = function (opt) {
   const self = this;
 
   // Put into dev or production mode
-  this.devMode = process.env.NODE_ENV !== "production";
+  this.devMode = process.env.NODE_ENV == "development";
 
   // Copy over options
   for (const prop in opt) {
