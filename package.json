@@ -25,7 +25,7 @@
     "js-yaml": "^3.4.3"
   },
   "engines": {
-    "node": ">=0.4.0"
+    "node": ">=14.16.0"
   },
   "scripts": {
     "test": "expresso test/*"
